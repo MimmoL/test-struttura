@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -38,6 +40,18 @@ public class UserController {
     public ResponseEntity<List<UserGetDto>> getAllUsersDto(){
         return new ResponseEntity<>(userGetDtoMapper.toUsergetDtoList(userService.getAllUsers()),HttpStatus.OK);
     }
+
+    @GetMapping("/get-by-id/{userId}")
+    public ResponseEntity<UserGetDto> getUserDtoById(@PathVariable Long userId){
+        Optional<User> userFound = userService.getUserById(userId);
+        if (userFound.isPresent()){
+            return new ResponseEntity<>(userGetDtoMapper.toUserGetDto(userFound.get()), HttpStatus.FOUND);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 
     /*
     //Risposta hardcoded
