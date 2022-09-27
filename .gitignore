@@ -1,0 +1,6 @@
+# Project exclude paths
+/intest/target/
+/intest-api/target/
+/intest-api-impl/target/
+/intest-dao/target/
+/intest-dto/target/
