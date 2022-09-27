@@ -87,6 +87,12 @@
             <version>1.0.13</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.ibm.intest</groupId>
+            <artifactId>intest-api-impl</artifactId>
+            <version>1.0.13</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 

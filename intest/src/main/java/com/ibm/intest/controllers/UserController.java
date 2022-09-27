@@ -21,7 +21,7 @@ import java.util.List;
 public class UserController {
 
     //Could not autowire. No beans of 'UserService' type found
-    //@Autowired
+    @Autowired
     UserService userService;
 
     @Autowired
