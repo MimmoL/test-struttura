@@ -58,6 +58,12 @@ public class UserController {
         }
     }
 
+    @PostMapping("/new-user")
+    public ResponseEntity saveUser(@RequestBody User newUser){
+        userService.saveUser(newUser);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 
     /*

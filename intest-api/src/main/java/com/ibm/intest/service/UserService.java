@@ -11,4 +11,6 @@ public interface UserService {
     public Optional<User> getUserById(Long id);
 
     public Boolean deleteUserById(Long id);
+
+    void saveUser(User newUser);
 }
