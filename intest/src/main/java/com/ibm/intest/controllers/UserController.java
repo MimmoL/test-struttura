@@ -1,9 +1,9 @@
 package com.ibm.intest.controllers;
 
+import com.ibm.intest.dto.UserDto;
+import com.ibm.intest.models.mappers.UserDtoMapper;
 import com.ibm.intest.service.UserService;
-import com.ibm.intest.dto.UserGetDto;
 import com.ibm.intest.models.entities.User;
-import com.ibm.intest.models.mappers.UserGetDtoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,29 +21,23 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    UserGetDtoMapper userGetDtoMapper;
 
 
 
 
-    @GetMapping("/get-all")
-    public ResponseEntity<List<User>> getAllUsers(){
+
+    @GetMapping("/get-all-dto")
+    public ResponseEntity<List<UserDto>> getAllUsersDto(){
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.OK);
     }
 
-    @GetMapping("/get-all-dto")
-    public ResponseEntity<List<UserGetDto>> getAllUsersDto(){
-        return new ResponseEntity<>(userGetDtoMapper.toUsergetDtoList(userService.getAllUsers()),HttpStatus.OK);
-    }
-
     @GetMapping("/get-by-id/{userId}")
-    public ResponseEntity<UserGetDto> getUserDtoById(@PathVariable Long userId){
-        Optional<User> userFound = userService.getUserById(userId);
-        if (userFound.isPresent()){
-            return new ResponseEntity<>(userGetDtoMapper.toUserGetDto(userFound.get()), HttpStatus.FOUND);
-        }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<UserDto> getUserDtoById(@PathVariable Long userId){
+        UserDto userFound = userService.getUserById(userId);
+        if (userFound != null){
+            return new ResponseEntity<>(userFound, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
     }
 

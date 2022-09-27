@@ -5,11 +5,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserGetDto {
+public class UserDto {
 
     private Long id;
     private String firstName;
     private String lastName;
     private int age;
+
 
 }

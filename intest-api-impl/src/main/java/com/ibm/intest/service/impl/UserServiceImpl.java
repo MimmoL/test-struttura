@@ -1,6 +1,8 @@
 package com.ibm.intest.service.impl;
 
+import com.ibm.intest.dto.UserDto;
 import com.ibm.intest.models.entities.User;
+import com.ibm.intest.models.mappers.UserDtoMapper;
 import com.ibm.intest.repositories.UserRepository;
 import com.ibm.intest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +19,21 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    UserDtoMapper userDtoMapper;
+
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getAllUsers() {
+        return userDtoMapper.toUserDtoList(userRepository.findAll());
     }
 
     @Override
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
+    public UserDto getUserById(Long id) {
+        Optional<User> optionalUserDto = userRepository.findById(id);
+        if (optionalUserDto.isPresent()){
+            return userDtoMapper.toUserDto(optionalUserDto.get());
+        }
+        return null;
     }
 
     @Override
