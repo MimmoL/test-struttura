@@ -1,14 +1,18 @@
 package com.ibm.intest.service.impl;
 
 import com.ibm.intest.dto.UserDto;
+import com.ibm.intest.models.entities.QUser;
 import com.ibm.intest.models.entities.User;
 import com.ibm.intest.models.mappers.UserDtoMapper;
 import com.ibm.intest.repositories.UserRepository;
 import com.ibm.intest.service.UserService;
+import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +25,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserDtoMapper userDtoMapper;
+
+    @Autowired
+    EntityManager em;
 
     @Override
     public List<UserDto> getAllUsers() {
@@ -61,5 +68,31 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(UserDto newUser) {
         userRepository.save(userDtoMapper.UserDtoToUser(newUser));
+    }
+
+    @Override
+    public List<UserDto> getAllUsersWithAge(int age, Pageable pageable) {
+        QUser qUser = QUser.user;
+        JPAQuery<User> jpaQuery = new JPAQuery<>(em);
+        List<User> usersWithAge = jpaQuery.from(qUser)
+                .where(qUser.age.eq(age))
+                .offset(pageable.getPageNumber()*pageable.getPageSize())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+
+        return userDtoMapper.toUserDtoList(usersWithAge);
+    }
+
+    @Override
+    public List<UserDto> getAllUsersFirstNameOverGivenAge(String name, int age) {
+        QUser qUser = QUser.user;
+        JPAQuery<User> jpaQuery = new JPAQuery<>(em);
+        List<User> usersWithGivenFirstNameOverAge = jpaQuery.from(qUser)
+                .where(qUser.firstName.eq(name))
+                .where(qUser.age.gt(age))
+                .fetch();
+
+        return userDtoMapper.toUserDtoList((usersWithGivenFirstNameOverAge));
     }
 }
