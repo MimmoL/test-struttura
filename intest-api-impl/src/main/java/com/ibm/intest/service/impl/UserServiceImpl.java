@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
         return userDtoMapper.toUserDtoList(userRepository.findAll());
     }
 
+
     @Override
     public UserDto getUserById(Long id) {
         Optional<User> optionalUserDto = userRepository.findById(id);
@@ -36,6 +37,16 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    /* dubbio
+    va bene se non utilizzo il DTO nel metodo deleteById?
+    in teoria non sto esponendo dati all'esterno, devo solo
+    eliminare il record dal datasource e mi arriva come input
+    solo l'id, non l'oggetto UserDto.
+
+    Caso diverso sarebbe se avessi in ingresso un UserDto, in quel
+    caso potrei usare il metodo userRepository.delete(User user) andando
+    a convertire l'UserDto che ho in ingresso in User
+     */
     @Override
     public Boolean deleteUserById(Long id) {
         Optional<User> userToDelete = userRepository.findById(id);
@@ -48,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void saveUser(User newUser) {
-        userRepository.save(newUser);
+    public void saveUser(UserDto newUser) {
+        userRepository.save(userDtoMapper.UserDtoToUser(newUser));
     }
 }

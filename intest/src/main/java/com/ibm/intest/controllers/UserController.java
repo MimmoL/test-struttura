@@ -10,19 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @RestController
 @RequestMapping("api/user")
 public class UserController {
 
-    //Could not autowire. No beans of 'UserService' type found
     @Autowired
     UserService userService;
-
-
-
 
 
 
@@ -53,7 +48,7 @@ public class UserController {
     }
 
     @PostMapping("/new-user")
-    public ResponseEntity saveUser(@RequestBody User newUser){
+    public ResponseEntity saveUser(@RequestBody UserDto newUser){
         userService.saveUser(newUser);
         return new ResponseEntity<>(HttpStatus.OK);
     }
