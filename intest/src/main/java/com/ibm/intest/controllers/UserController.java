@@ -1,6 +1,6 @@
 package com.ibm.intest.controllers;
-
 import com.ibm.intest.dto.UserDto;
+import com.ibm.intest.dto.UserDtoCriteria;
 import com.ibm.intest.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -24,6 +24,12 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    //QueryDsl con predicate
+    @PostMapping("/get-users")
+    @Operation(summary = "Ricerca utenti", description = "Ricerca utenti con criteri: nome, cognome, età")
+    public ResponseEntity<List<UserDto>> findUsers(@RequestBody UserDtoCriteria criteria){
+        return new ResponseEntity<>(userService.findUsers(criteria), HttpStatus.OK);
+    }
 
     //QueryDSL
     //Ritorna tutti gli UserDto che hanno una determinata età con paginazione

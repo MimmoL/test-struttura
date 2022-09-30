@@ -1,11 +1,13 @@
 package com.ibm.intest.service.impl;
 
 import com.ibm.intest.dto.UserDto;
+import com.ibm.intest.dto.UserDtoCriteria;
 import com.ibm.intest.models.entities.QUser;
 import com.ibm.intest.models.entities.User;
 import com.ibm.intest.models.mappers.UserDtoMapper;
 import com.ibm.intest.repositories.UserRepository;
 import com.ibm.intest.service.UserService;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -94,5 +96,34 @@ public class UserServiceImpl implements UserService {
                 .fetch();
 
         return userDtoMapper.toUserDtoList((usersWithGivenFirstNameOverAge));
+    }
+
+    @Override
+    public List<UserDto> findUsers(UserDtoCriteria criteria) {
+
+        QUser qUser = QUser.user;
+        BooleanBuilder predicate = new BooleanBuilder();
+
+        Long id = criteria.getId();
+        String firstName = criteria.getFirstName();
+        String lastName = criteria.getLastName();
+        Integer age = criteria.getAge();
+
+        if (id != null){
+            predicate.and(qUser.userId.eq(id));
+        }
+        if (firstName != null){
+            predicate.and(qUser.firstName.eq(firstName));
+        }
+        if (lastName != null){
+            predicate.and(qUser.lastName.eq(lastName));
+        }
+        if (age != null){
+            predicate.and(qUser.age.eq(age));
+        }
+
+        List<User> usersFound = (List<User>) userRepository.findAll(predicate);
+
+        return userDtoMapper.toUserDtoList(usersFound);
     }
 }
