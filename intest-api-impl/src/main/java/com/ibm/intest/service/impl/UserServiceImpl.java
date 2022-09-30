@@ -9,6 +9,7 @@ import com.ibm.intest.repositories.UserRepository;
 import com.ibm.intest.service.UserService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -101,6 +102,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> findUsers(UserDtoCriteria criteria) {
 
+        //tutto questo andrebbe in una classe UserDtoCriteriaBuilder all'interno del package query
+        //tale classe andrebbe annotata con @Component, così da poter fare l'autowire in UserServiceImpl
         QUser qUser = QUser.user;
         BooleanBuilder predicate = new BooleanBuilder();
 
@@ -123,7 +126,6 @@ public class UserServiceImpl implements UserService {
         }
 
         List<User> usersFound = (List<User>) userRepository.findAll(predicate);
-
         return userDtoMapper.toUserDtoList(usersFound);
     }
 }

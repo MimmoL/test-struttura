@@ -4,6 +4,7 @@ import com.ibm.intest.dto.UserDtoCriteria;
 import com.ibm.intest.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -25,9 +26,19 @@ public class UserController {
     UserService userService;
 
     //QueryDsl con predicate
-    @PostMapping("/get-users")
-    @Operation(summary = "Ricerca utenti", description = "Ricerca utenti con criteri: nome, cognome, età")
-    public ResponseEntity<List<UserDto>> findUsers(@RequestBody UserDtoCriteria criteria){
+    //Qui faccio un controllo per verificare se lastName (che è annotato con @NotNull) è null
+    //tramite un if, ma in realtà dovrebbe pensarci @Valid, che purtroppo non sta funzionando
+    @PostMapping("/users")
+    @Operation(summary = "Ricerca utenti", description = "Ricerca utenti con criteri: nome, cognome*, età")
+    public ResponseEntity<List<UserDto>> findUsers(@RequestBody @Valid UserDtoCriteria criteria){
+        /*
+        if (criteria.getLastName() == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(userService.findUsers(criteria), HttpStatus.OK);
+        }
+
+         */
         return new ResponseEntity<>(userService.findUsers(criteria), HttpStatus.OK);
     }
 

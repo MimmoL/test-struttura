@@ -1,15 +1,14 @@
 package com.ibm.intest.dto;
 
-import com.sun.istack.internal.NotNull;
-import lombok.AllArgsConstructor;
+
+
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
+import java.io.Serializable;
+
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-//JsonInclude not null
 public class UserDtoCriteria {
 
     @Nullable
@@ -18,7 +17,7 @@ public class UserDtoCriteria {
     @Nullable
     private String firstName;
 
-    @NotNull
+    @NotNull(message = "il campo cognome non deve essere vuoto")
     private String lastName;
 
     @Nullable
