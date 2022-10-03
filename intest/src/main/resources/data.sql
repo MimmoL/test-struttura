@@ -38,3 +38,7 @@ insert into users(user_id, first_name, last_name, age, secret_code)
 values(10019, 'Mario', 'Bianco', 70, 'RIKO871');
 insert into users(user_id, first_name, last_name, age, secret_code)
 values(10020, 'Giulia', 'Verdone', 70, 'VIHNMP');
+insert into users(user_id, first_name, last_name, age, secret_code)
+values(10021, 'Giulia', 'Bianchi', 70, '65HNMP');
+insert into users(user_id, first_name, last_name, age, secret_code)
+values(10022, 'Veronica', 'Bianchi', 70, 'VI00MP');

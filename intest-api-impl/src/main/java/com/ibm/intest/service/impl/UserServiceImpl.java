@@ -2,6 +2,7 @@ package com.ibm.intest.service.impl;
 
 import com.ibm.intest.dto.UserDto;
 import com.ibm.intest.dto.UserDtoCriteria;
+import com.ibm.intest.dto.UserResponse;
 import com.ibm.intest.models.entities.QUser;
 import com.ibm.intest.models.entities.User;
 import com.ibm.intest.models.mappers.UserDtoMapper;
@@ -9,13 +10,13 @@ import com.ibm.intest.repositories.UserRepository;
 import com.ibm.intest.service.UserService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -127,5 +128,28 @@ public class UserServiceImpl implements UserService {
 
         List<User> usersFound = (List<User>) userRepository.findAll(predicate);
         return userDtoMapper.toUserDtoList(usersFound);
+    }
+
+    //usa i criteria, ma restituisce solo i cognomi
+    @Override
+    public UserResponse findUsersLastName(UserDtoCriteria criteria) {
+
+        QUser qUser = QUser.user;
+        BooleanBuilder predicate = new BooleanBuilder();
+        UserResponse response = new UserResponse();
+        List<String> nomi = new ArrayList<>();
+
+        String lastName = criteria.getLastName();
+
+        if (lastName != null){
+            predicate.and(qUser.lastName.eq(lastName));
+        }
+
+        List<User> usersFound = (List<User>) userRepository.findAll(predicate);
+        for (User user: usersFound) {
+            nomi.add(user.getFirstName());
+        }
+        response.setNomi(nomi);
+        return response;
     }
 }

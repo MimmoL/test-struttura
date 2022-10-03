@@ -1,10 +1,12 @@
 package com.ibm.intest.controllers;
 import com.ibm.intest.dto.UserDto;
 import com.ibm.intest.dto.UserDtoCriteria;
+import com.ibm.intest.dto.UserResponse;
 import com.ibm.intest.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javax.validation.Valid;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -40,6 +42,24 @@ public class UserController {
 
          */
         return new ResponseEntity<>(userService.findUsers(criteria), HttpStatus.OK);
+    }
+
+    /*
+    Come la chiamata sopra, ma restituisce una UserResponse con solo una lista dei
+    nomi di persone che hanno un determinato cognome
+     */
+    @PostMapping("/users-last-name")
+    @Operation(summary = "Ricerca nomi utenti con stesso cognome", description = "Ricerca utenti con criteri: cognome* che restituisce i nomi di persone con stesso cognome")
+    public ResponseEntity<UserResponse> findUsersNameByLastName(@RequestBody @Valid UserDtoCriteria criteria){
+        /*
+        if (criteria.getLastName() == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(userService.findUsers(criteria), HttpStatus.OK);
+        }
+
+         */
+        return new ResponseEntity<UserResponse>(userService.findUsersLastName(criteria), HttpStatus.OK);
     }
 
     //QueryDSL

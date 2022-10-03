@@ -3,6 +3,7 @@ package com.ibm.intest.service;
 
 import com.ibm.intest.dto.UserDto;
 import com.ibm.intest.dto.UserDtoCriteria;
+import com.ibm.intest.dto.UserResponse;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public interface UserService {
     List<UserDto> getAllUsersFirstNameOverGivenAge(String name, int age);
 
     List<UserDto> findUsers(UserDtoCriteria criteria);
+
+    UserResponse findUsersLastName(UserDtoCriteria criteria);
 
 }
