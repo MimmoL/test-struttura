@@ -2,11 +2,9 @@ package com.ibm.intest.dto;
 
 
 
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.lang.Nullable;
-
-import java.io.Serializable;
+import javax.validation.constraints.NotBlank;
 
 @Data
 public class UserDtoCriteria {
@@ -17,7 +15,7 @@ public class UserDtoCriteria {
     @Nullable
     private String firstName;
 
-    @NotNull(message = "il campo cognome non deve essere vuoto")
+    @NotBlank(message = "il campo cognome non deve essere vuoto")
     private String lastName;
 
     @Nullable

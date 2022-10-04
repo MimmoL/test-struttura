@@ -28,19 +28,9 @@ public class UserController {
     UserService userService;
 
     //QueryDsl con predicate
-    //Qui faccio un controllo per verificare se lastName (che è annotato con @NotNull) è null
-    //tramite un if, ma in realtà dovrebbe pensarci @Valid, che purtroppo non sta funzionando
     @PostMapping("/users")
     @Operation(summary = "Ricerca utenti", description = "Ricerca utenti con criteri: nome, cognome*, età")
     public ResponseEntity<List<UserDto>> findUsers(@RequestBody @Valid UserDtoCriteria criteria){
-        /*
-        if (criteria.getLastName() == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<>(userService.findUsers(criteria), HttpStatus.OK);
-        }
-
-         */
         return new ResponseEntity<>(userService.findUsers(criteria), HttpStatus.OK);
     }
 
@@ -51,14 +41,6 @@ public class UserController {
     @PostMapping("/users-last-name")
     @Operation(summary = "Ricerca nomi utenti con stesso cognome", description = "Ricerca utenti con criteri: cognome* che restituisce i nomi di persone con stesso cognome")
     public ResponseEntity<UserResponse> findUsersNameByLastName(@RequestBody @Valid UserDtoCriteria criteria){
-        /*
-        if (criteria.getLastName() == null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        } else {
-            return new ResponseEntity<>(userService.findUsers(criteria), HttpStatus.OK);
-        }
-
-         */
         return new ResponseEntity<UserResponse>(userService.findUsersLastName(criteria), HttpStatus.OK);
     }
 

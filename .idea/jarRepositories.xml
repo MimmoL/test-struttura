@@ -7,6 +7,11 @@
       <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="INAILApprovedRepo" />
+      <option name="name" value="INAIL Approved Repo" />
+      <option name="url" value="http://52.48.155.51:8081/repository/all-maven-dependencies/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Maven Central repository" />
       <option name="url" value="https://repo1.maven.org/maven2" />
@@ -15,6 +20,26 @@
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="collinail" />
+      <option name="name" value="collinail" />
+      <option name="url" value="http://52.48.155.51:8081/repository/all-maven-dependencies/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Repository Switchboard" />
+      <option name="url" value="http://52.48.155.51:8081/repository/all-maven-dependencies/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven-releases" />
+      <option name="name" value="maven-releases" />
+      <option name="url" value="http://52.48.155.51:8081/repository/all-maven-dependencies/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="collinail_unapp" />
+      <option name="name" value="collinail_unapp" />
+      <option name="url" value="http://52.48.155.51:8081/repository/all-maven-dependencies/" />
     </remote-repository>
   </component>
 </project>

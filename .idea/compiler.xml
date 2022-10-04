@@ -17,8 +17,8 @@
         </processorPath>
         <module name="intest-dto" />
         <module name="intest" />
-        <module name="intest-api" />
         <module name="intest-api-impl" />
+        <module name="intest-api" />
       </profile>
       <profile name="Annotation profile for intest-dao" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
